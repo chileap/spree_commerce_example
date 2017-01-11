@@ -1,0 +1,22 @@
+- if spree_current_user
+  .navbar-right{"data-hook" => "admin_login_navigation_bar"}
+    %ul.nav.navbar-nav
+      %li.dropdown.user.user-menu
+        %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+          %i.glyphicon.glyphicon-user
+          %span
+            = spree_current_user.username
+            %i.caret
+        %ul.dropdown-menu
+          %li.user-header.bg-light-blue
+            %p
+              = spree_current_user.username
+          - if spree.respond_to? :root_path
+            %li.user-body
+              .col-xs-12.text-center{"data-hook" => "store-frontend-link"}
+                = link_to Spree.t(:back_to_store), spree.root_path, :target => '_blank'
+          %li#login-nav.user-footer
+            .pull-left{"data-hook" => "user-account-link"}
+              = link_to Spree.t(:account), spree.edit_user_path(spree_current_user), class: "btn btn-default btn-flat"
+            .pull-right{"data-hook" => "user-logout-link"}
+              = link_to Spree.t(:logout), spree.admin_logout_path, class: "btn btn-default btn-flat"

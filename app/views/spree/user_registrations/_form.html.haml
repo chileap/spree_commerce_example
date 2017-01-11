@@ -1,0 +1,22 @@
+%fieldset#password-credentials
+  .form-group
+    = f.label :username
+    = f.text_field :username, :class => 'form-control'
+    = error_message_on f.object, :username
+  = f.fields_for :spree_addresses, f.object.spree_addresses.any? ? f.object.spree_addresses : Spree::Address.default(@spree_user, "bill") do |ba_form|
+    - ba_form.object ||= Spree::Address.new(country: Spree::Country.new)
+    = render :partial => 'spree/shared/addresses/address_form', :locals => { :f => ba_form, :type => "billing" }
+  .form-group
+    = f.label :email, Spree.t(:email)
+    = f.email_field :email, :class => 'form-control'
+    = error_message_on f.object, :email
+  %hr/
+  .form-group
+    = f.label :password, Spree.t(:password)
+    = f.password_field :password, :class => 'form-control'
+    = error_message_on f.object, :password
+  .form-group
+    = f.label :password_confirmation, Spree.t(:password_confirmation)
+    = f.password_field :password_confirmation, :class => 'form-control'
+    = error_message_on f.object, :password_confirmation
+%div{"data-hook" => "signup_below_password_fields"}
